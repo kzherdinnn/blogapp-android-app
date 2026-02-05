@@ -154,15 +154,19 @@ public class SignInFragment extends Fragment {
                     startActivity(new Intent(((AuthActivity)getContext()), HomeActivity.class));
                     ((AuthActivity) getContext()).finish();
                     Toast.makeText(getContext(), "Login Success", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getContext(), object.getString("message"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                Toast.makeText(getContext(), "Login Failed", Toast.LENGTH_SHORT).show();
             }
             dialog.dismiss();
         },error -> {
             // error if connection not success
             error.printStackTrace();
             dialog.dismiss();
+            Toast.makeText(getContext(), "Connection Error", Toast.LENGTH_SHORT).show();
         }){
 
             // add parameters
@@ -181,18 +185,5 @@ public class SignInFragment extends Fragment {
         RequestQueue queue = Volley.newRequestQueue(getContext());
         queue.add(request);
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }

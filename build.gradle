@@ -5,7 +5,7 @@ buildscript {
     }
     dependencies {
         // Gunakan versi AGP terbaru yang kompatibel dengan Gradle terbaru
-        classpath 'com.android.tools.build:gradle:8.7.2'
+        classpath 'com.android.tools.build:gradle:8.13.2'
     }
 }
 

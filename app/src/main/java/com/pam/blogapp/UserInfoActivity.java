@@ -14,6 +14,7 @@ import android.provider.MediaStore;
 import android.util.Base64;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -140,6 +141,7 @@ public class UserInfoActivity extends AppCompatActivity {
 
         },error ->{
             error.printStackTrace();
+            Toast.makeText(getApplicationContext(), "Server Error", Toast.LENGTH_SHORT).show();
             dialog.dismiss();
         } ){
 
@@ -173,28 +175,11 @@ public class UserInfoActivity extends AppCompatActivity {
     private String bitmapToString(Bitmap bitmap) {
         if (bitmap!=null){
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG,50,byteArrayOutputStream);
             byte [] array = byteArrayOutputStream.toByteArray();
             return Base64.encodeToString(array,Base64.DEFAULT);
         }
 
         return "";
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

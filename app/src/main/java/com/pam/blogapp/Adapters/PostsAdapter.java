@@ -34,10 +34,14 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -71,7 +75,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsHolder>
         holder.txtName.setText(post.getUser().getUserName());
         holder.txtComments.setText("View all "+post.getComments()+" comments");
         holder.txtLikes.setText(post.getLikes()+" Likes");
-//        holder.txtDate.setText(post.getDate());
+        holder.txtDate.setText(formatDate(post.getDate()));
         holder.txtDesc.setText(post.getDesc());
 
         holder.btnLike.setImageResource(
@@ -177,6 +181,37 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsHolder>
             context.startActivity(i);
         });
 
+    }
+
+    private String formatDate(String date) {
+        try {
+            // Date from backend is like: 2026-02-05T17:38:02.000000Z
+            // We need to parse it. The 'T' separates date and time, and 'Z' means UTC.
+            String formattedDate = date.substring(0, 19).replace("T", " ");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC")); // The date from backend is UTC
+            Date postDate = sdf.parse(formattedDate);
+            long now = System.currentTimeMillis();
+            long diff = now - postDate.getTime(); // diff in milliseconds
+
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+            long hours = TimeUnit.MILLISECONDS.toHours(diff);
+            long days = TimeUnit.MILLISECONDS.toDays(diff);
+
+            if (minutes < 1) {
+                return "baru saja";
+            } else if (minutes < 60) {
+                return minutes + " menit yang lalu";
+            } else if (hours < 24) {
+                return hours + " jam yang lalu";
+            } else {
+                // For showing date, it will use the device's local timezone, which is what we want.
+                return new SimpleDateFormat("dd MMM").format(postDate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return date;
+        }
     }
 
     private void deletePost(int postId, int position) {

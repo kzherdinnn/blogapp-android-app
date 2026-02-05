@@ -31,9 +31,13 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -65,7 +69,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         Comment comment = list.get(position);
         Picasso.get().load(comment.getUser().getPhoto()).into(holder.imgProfile);
         holder.txtName.setText(comment.getUser().getUserName());
-//        holder.txtDate.setText(comment.getDate());
+        holder.txtDate.setText(formatDate(comment.getDate()));
         holder.txtComment.setText(comment.getComment());
 
         if (preferences.getInt("id",0)!=comment.getUser().getId()){
@@ -94,6 +98,37 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     }
 
+    private String formatDate(String date) {
+        try {
+            // Date from backend is like: 2026-02-05T17:38:02.000000Z
+            // We need to parse it. The 'T' separates date and time, and 'Z' means UTC.
+            String formattedDate = date.substring(0, 19).replace("T", " ");
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            sdf.setTimeZone(TimeZone.getTimeZone("UTC")); // The date from backend is UTC
+            Date postDate = sdf.parse(formattedDate);
+            long now = System.currentTimeMillis();
+            long diff = now - postDate.getTime(); // diff in milliseconds
+
+            long minutes = TimeUnit.MILLISECONDS.toMinutes(diff);
+            long hours = TimeUnit.MILLISECONDS.toHours(diff);
+            long days = TimeUnit.MILLISECONDS.toDays(diff);
+
+            if (minutes < 1) {
+                return "baru saja";
+            } else if (minutes < 60) {
+                return minutes + " menit yang lalu";
+            } else if (hours < 24) {
+                return hours + " jam yang lalu";
+            } else {
+                // For showing date, it will use the device's local timezone, which is what we want.
+                return new SimpleDateFormat("dd MMM").format(postDate);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return date;
+        }
+    }
+
     private void deleteComment(int commentId, int position) {
         dialog.setMessage("Deleting comment");
         dialog.show();
@@ -109,7 +144,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                     Post post = HomeFragment.arrayList.get(CommentActivity.postPosition);
                     post.setComments(post.getComments() - 1);
                     HomeFragment.arrayList.set(CommentActivity.postPosition, post);
-                    HomeFragment.recyclerView.getAdapter().notifyDataSetChanged();
+                    HomeFragment.getRecyclerView().getAdapter().notifyDataSetChanged();
 
                     notifyDataSetChanged();
                     Toast.makeText(context, "Comment deleted successfully", Toast.LENGTH_SHORT).show();

@@ -48,7 +48,11 @@ public class HomeFragment extends Fragment {
     private MaterialToolbar toolbar;
     private SharedPreferences sharedPreferences;
 
-    public HomeFragment(){}
+    public HomeFragment(){ }
+
+    public static RecyclerView getRecyclerView() {
+        return recyclerView;
+    }
 
     @Nullable
     @Override
@@ -68,6 +72,10 @@ public class HomeFragment extends Fragment {
         ((HomeActivity)getContext()).setSupportActionBar(toolbar);
         setHasOptionsMenu(true);
 
+        arrayList = new ArrayList<>();
+        postsAdapter = new PostsAdapter(getContext(), arrayList);
+        recyclerView.setAdapter(postsAdapter);
+
         getPosts();
 
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -79,7 +87,6 @@ public class HomeFragment extends Fragment {
     }
 
     private void getPosts() {
-        arrayList = new ArrayList<>();
         refreshLayout.setRefreshing(true);
 
         StringRequest request = new StringRequest(Request.Method.GET, Constant.POSTS,response -> {
@@ -87,6 +94,7 @@ public class HomeFragment extends Fragment {
             try {
                 JSONObject object = new JSONObject(response);
                 if (object.getBoolean("success")){
+                    arrayList.clear();
                     JSONArray array = new JSONArray(object.getString("posts"));
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject postObject = array.getJSONObject(i);
@@ -109,9 +117,7 @@ public class HomeFragment extends Fragment {
 
                         arrayList.add(post);
                     }
-
-                    postsAdapter = new PostsAdapter(getContext(),arrayList);
-                    recyclerView.setAdapter(postsAdapter);
+                    postsAdapter.notifyDataSetChanged();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
