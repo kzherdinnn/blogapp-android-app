@@ -1,93 +1,138 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="50dp"
-    android:orientation="vertical"
+    android:background="@color/colorBackground"
+    android:fillViewport="true"
     tools:context=".UserInfoActivity">
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center_horizontal"
-        android:text="User Info"/>
+        android:orientation="vertical">
 
+        <!-- Header Gradient -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/bg_auth_header"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:padding="24dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@color/colorLightGrey"
-        android:id="@+id/imgUserInfo"
-        android:layout_marginBottom="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="👤"
+                android:textSize="40sp"
+                android:gravity="center"
+                android:layout_marginBottom="12dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select photo"
-        android:textColor="@color/colorPrimary"
-        android:gravity="center_horizontal"
-        android:id="@+id/txtSelectPhoto"
-        android:textSize="16sp"
-        android:layout_marginBottom="20dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorWhite"
+                android:text="Set Up Your Profile"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tell us a bit about yourself"
+                android:textSize="13sp"
+                android:textColor="#CCffffff"
+                android:layout_marginTop="4dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/txtLayoutNameUserInfo"
-        android:layout_marginBottom="6dp"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Form Card -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtNameUserInfo"
-            android:hint="Name"
-            android:inputType="text"
-            android:textSize="15sp"/>
+            android:orientation="vertical"
+            android:background="@drawable/bg_auth_form"
+            android:paddingLeft="28dp"
+            android:paddingRight="28dp"
+            android:paddingTop="36dp"
+            android:paddingBottom="40dp"
+            android:layout_marginTop="-24dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <!-- Profile Picture -->
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@color/colorLightGrey"
+                android:id="@+id/imgUserInfo"
+                android:layout_marginBottom="8dp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📷  Upload Photo"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center_horizontal"
+                android:id="@+id/txtSelectPhoto"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="28dp"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/txtLayoutLastnameameUserInfo"
-        android:layout_marginBottom="30dp"
-        android:layout_height="wrap_content">
+            <!-- Name Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/txtLayoutNameUserInfo"
+                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content"
+                style="@style/OutlinedInputStyle"
+                android:hint="First Name">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/txtLastnameUserInfo"
-            android:hint="Lastname"
-            android:inputType="text"
-            android:textSize="15sp"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtNameUserInfo"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorTextPrimary"/>
 
-    </com.google.android.material.textfield.TextInputLayout>
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Last Name Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/txtLayoutLastnameameUserInfo"
+                android:layout_marginBottom="32dp"
+                android:layout_height="wrap_content"
+                style="@style/OutlinedInputStyle"
+                android:hint="Last Name">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:text="Continue"
-        android:id="@+id/btnContinue"
-        android:background="@drawable/btn_round"
-        android:textColor="@color/colorWhite"
-        android:layout_marginBottom="70dp"
-        android:textSize="17dp"
-        android:textAllCaps="false"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtLastnameUserInfo"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorTextPrimary"/>
 
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Continue Button -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Continue →"
+                android:id="@+id/btnContinue"
+                android:background="@drawable/btn_gradient"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:elevation="4dp"/>
 
+        </LinearLayout>
 
+    </LinearLayout>
 
-
-
-
-
-</LinearLayout>
+</ScrollView>

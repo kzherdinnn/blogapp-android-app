@@ -1,10 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2196f1</color>
-    <color name="colorPrimaryDark">#dddddd</color>
-    <color name="colorAccent">#2196f1</color>
+    <!-- Primary Brand Colors -->
+    <color name="colorPrimary">#6C63FF</color>
+    <color name="colorPrimaryDark">#5A52D5</color>
+    <color name="colorPrimaryLight">#8B85FF</color>
+    <color name="colorAccent">#FF6584</color>
+
+    <!-- Background Colors -->
+    <color name="colorBackground">#F8F9FE</color>
+    <color name="colorSurface">#FFFFFF</color>
+    <color name="colorCardBackground">#FFFFFF</color>
+
+    <!-- Text Colors -->
+    <color name="colorTextPrimary">#1A1A2E</color>
+    <color name="colorTextSecondary">#6B7280</color>
+    <color name="colorTextHint">#9CA3AF</color>
+
+    <!-- Legacy Colors (kept for compatibility) -->
     <color name="colorWhite">#FFFFFF</color>
-    <color name="colorBlack">#000000</color>
-    <color name="colorGrey">#666666</color>
-    <color name="colorLightGrey">#999999</color>
+    <color name="colorBlack">#1A1A2E</color>
+    <color name="colorGrey">#6B7280</color>
+    <color name="colorLightGrey">#E5E7EB</color>
+
+    <!-- Utility Colors -->
+    <color name="colorDivider">#F3F4F6</color>
+    <color name="colorLike">#FF6584</color>
+    <color name="colorSuccess">#10B981</color>
+    <color name="colorError">#EF4444</color>
+    <color name="colorOverlay">#80000000</color>
+
+    <!-- Gradient Colors -->
+    <color name="colorGradientStart">#6C63FF</color>
+    <color name="colorGradientEnd">#FF6584</color>
+
+    <!-- Bottom Nav -->
+    <color name="colorNavActive">#6C63FF</color>
+    <color name="colorNavInactive">#9CA3AF</color>
 </resources>

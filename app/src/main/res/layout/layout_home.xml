@@ -3,26 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
+    <!-- Modern Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:id="@+id/toolbarHome"
-        android:elevation="1dp"
+        android:elevation="0dp"
+        android:background="@color/colorBackground"
         android:theme="@style/AppTheme.BottomAppbar"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
         app:title=" ">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Blog App"
-            android:fontFamily="@font/leckerlione_regular"
-            android:textSize="20sp"
-            android:textColor="@color/colorBlack"/>
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Blog App"
+                    android:textSize="22sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/colorTextPrimary"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Discover stories"
+                    android:textSize="12sp"
+                    android:textColor="@color/colorTextSecondary"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"/>
+
+    <!-- Posts List -->
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:layout_width="match_parent"
         android:id="@+id/swipeHome"
@@ -31,17 +66,11 @@
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
             android:id="@+id/recyclerHome"
-            android:layout_height="match_parent"></androidx.recyclerview.widget.RecyclerView>
+            android:paddingTop="8dp"
+            android:paddingBottom="80dp"
+            android:clipToPadding="false"
+            android:layout_height="match_parent"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-
-
-
-
-
-
-
-
 
 </LinearLayout>

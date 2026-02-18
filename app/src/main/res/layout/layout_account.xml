@@ -3,110 +3,174 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
 
-
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         android:id="@+id/toolbarAccount"
-        android:elevation="1dp"
+        android:elevation="0dp"
+        android:background="@color/colorBackground"
         app:title=" "
         android:theme="@style/AppTheme.BottomAppbar"
-        android:layout_height="?attr/actionBarSize">
+        android:layout_height="64dp"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:textColor="@color/colorBlack"
-            android:textSize="20sp"
-            android:text="Blog App"
-            android:fontFamily="@font/leckerlione_regular"
-            android:layout_height="wrap_content"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:text="My Profile"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
-
-
-    <LinearLayout
+    <!-- Divider -->
+    <View
         android:layout_width="match_parent"
-        android:orientation="horizontal"
-        android:paddingTop="30dp"
-        android:paddingBottom="30dp"
-        android:layout_height="wrap_content">
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"/>
+
+    <!-- Scrollable Content -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="false">
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:layout_width="90dp"
-                android:layout_height="90dp"
-                android:layout_marginBottom="10dp"
-                android:id="@+id/imgAccountProfile"/>
+            <!-- Profile Header Card -->
+            <androidx.cardview.widget.CardView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="12dp"
+                app:cardCornerRadius="20dp"
+                app:cardElevation="3dp"
+                app:cardBackgroundColor="@color/colorSurface">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center">
+
+                    <!-- Profile Picture -->
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:layout_width="96dp"
+                        android:layout_height="96dp"
+                        android:layout_marginBottom="12dp"
+                        android:id="@+id/imgAccountProfile"
+                        android:src="@color/colorLightGrey"/>
+
+                    <!-- User Name -->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:textSize="20sp"
+                        android:textColor="@color/colorTextPrimary"
+                        android:text="User Name"
+                        android:textStyle="bold"
+                        android:id="@+id/txtAccountName"
+                        android:layout_marginBottom="20dp"
+                        android:layout_height="wrap_content"/>
+
+                    <!-- Stats Row -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginBottom="20dp">
+
+                        <!-- Posts Count -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical"
+                            android:gravity="center"
+                            android:background="@drawable/bg_stat_card"
+                            android:padding="12dp"
+                            android:layout_marginLeft="8dp"
+                            android:layout_marginRight="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:textSize="24sp"
+                                android:textColor="@color/colorPrimary"
+                                android:text="0"
+                                android:textStyle="bold"
+                                android:id="@+id/txtAccountPostCount"
+                                android:layout_height="wrap_content"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:textSize="13sp"
+                                android:textColor="@color/colorTextSecondary"
+                                android:text="Posts"
+                                android:layout_height="wrap_content"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <!-- Edit Account Button -->
+                    <Button
+                        android:layout_width="match_parent"
+                        android:background="@drawable/btn_gradient"
+                        android:text="Edit Profile"
+                        android:textColor="@color/colorWhite"
+                        android:textAllCaps="false"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        android:id="@+id/btnEditAccount"
+                        android:layout_height="48dp"
+                        android:elevation="2dp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Posts Section Header -->
             <TextView
                 android:layout_width="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/colorBlack"
-                android:text="User"
+                android:layout_height="wrap_content"
+                android:text="My Posts"
+                android:textSize="18sp"
                 android:textStyle="bold"
-                android:id="@+id/txtAccountName"
+                android:textColor="@color/colorTextPrimary"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="8dp"/>
+
+            <!-- Posts Grid/List -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:id="@+id/recyclerAccount"
+                android:paddingBottom="80dp"
+                android:clipToPadding="false"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>
 
-
-        <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:layout_weight="1">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="20sp"
-                android:textColor="@color/colorBlack"
-                android:text="0"
-                android:layout_marginBottom="8dp"
-                android:id="@+id/txtAccountPostCount"
-                android:layout_height="wrap_content"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:textSize="16sp"
-                android:textColor="@color/colorBlack"
-                android:text="Posts"
-                android:layout_height="wrap_content"/>
-
-        </LinearLayout>
-
-
-
-
-    </LinearLayout>
-
-
-    <Button
-        android:layout_width="match_parent"
-        android:layout_marginLeft="70dp"
-        android:layout_marginRight="70dp"
-        android:background="@drawable/btn_round"
-        android:text="Edit Account"
-        android:textColor="@color/colorWhite"
-        android:textAllCaps="false"
-        android:id="@+id/btnEditAccount"
-        android:layout_marginBottom="16dp"
-        android:layout_height="40dp"/>
-
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:id="@+id/recyclerAccount"
-        android:layout_height="wrap_content"/>
-
-
+    </ScrollView>
 
 </LinearLayout>

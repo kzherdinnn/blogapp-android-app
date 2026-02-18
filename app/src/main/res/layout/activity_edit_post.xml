@@ -5,81 +5,119 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/colorBackground"
     tools:context=".AddPostActivity">
 
+    <!-- Toolbar -->
     <com.google.android.material.appbar.MaterialToolbar
         android:layout_width="match_parent"
         app:title=" "
-        android:elevation="1dp"
-        android:layout_height="wrap_content">
+        android:elevation="0dp"
+        android:background="@color/colorBackground"
+        android:layout_height="64dp">
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:src="@drawable/ic_arrow_back_black_24dp"
-            android:background="@android:color/transparent"
-            android:layout_marginRight="12dp"
-            android:tint="@color/colorBlack"
-            android:onClick="cancelEdit"
-            android:layout_height="wrap_content"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:text="Edit Post"
-            android:textColor="@color/colorBlack"
-            android:textSize="18sp"
-            android:layout_height="wrap_content"/>
+            <ImageButton
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_arrow_back_black_24dp"
+                android:background="@drawable/bg_stat_card"
+                android:padding="8dp"
+                android:tint="@color/colorTextPrimary"
+                android:onClick="cancelEdit"
+                android:layout_marginRight="12dp"/>
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:text="Edit Post"
+                android:textColor="@color/colorTextPrimary"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_height="wrap_content"/>
+
+        </LinearLayout>
 
     </com.google.android.material.appbar.MaterialToolbar>
 
+    <!-- Divider -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorDivider"/>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
-            android:layout_marginTop="6dp">
+            android:padding="20dp">
 
-
-
-            <EditText
+            <!-- Caption Card -->
+            <androidx.cardview.widget.CardView
+                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:layout_width="match_parent"
-                android:layout_height="140dp"
-                android:inputType="textMultiLine"
-                android:gravity="left"
-                android:textSize="15sp"
-                android:id="@+id/txtDescEditPost"
-                android:padding="8dp"
-                android:background="@drawable/txt_background"/>
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="2dp"
+                app:cardBackgroundColor="@color/colorSurface">
 
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Edit your caption"
+                        android:textSize="13sp"
+                        android:textColor="@color/colorTextSecondary"
+                        android:layout_marginBottom="8dp"/>
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="160dp"
+                        android:inputType="textMultiLine"
+                        android:gravity="top|left"
+                        android:textSize="15sp"
+                        android:id="@+id/txtDescEditPost"
+                        android:padding="0dp"
+                        android:background="@android:color/transparent"
+                        android:textColor="@color/colorTextPrimary"
+                        android:hint="What's on your mind?"
+                        android:textColorHint="@color/colorTextHint"
+                        android:lineSpacingExtra="4dp"/>
+
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <!-- Save Button -->
             <Button
                 android:layout_width="match_parent"
-                android:layout_height="42dp"
-                android:text="Save"
+                android:layout_height="52dp"
+                android:text="Save Changes"
                 android:id="@+id/btnEditPost"
-                android:background="@drawable/btn_round"
+                android:background="@drawable/btn_gradient"
                 android:textColor="@color/colorWhite"
-                android:layout_marginTop="12dp"
-                android:textSize="17dp"
-                android:textAllCaps="false"/>
-
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:elevation="4dp"/>
 
         </LinearLayout>
 
-
-
-
-
-
     </ScrollView>
-
-
-
-
 
 </LinearLayout>

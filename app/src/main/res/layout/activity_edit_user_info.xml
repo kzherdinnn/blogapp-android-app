@@ -1,90 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="50dp"
+    android:background="@color/colorBackground"
+    android:fillViewport="true"
     tools:context=".EditUserInfoActivity">
 
-
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_marginBottom="30dp"
-        android:gravity="center_horizontal"
-        android:text="Edit Info"/>
+        android:orientation="vertical">
 
+        <!-- Toolbar -->
+        <com.google.android.material.appbar.MaterialToolbar
+            android:layout_width="match_parent"
+            app:title=" "
+            android:elevation="0dp"
+            android:background="@color/colorBackground"
+            android:layout_height="64dp">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_gravity="center_horizontal"
-        android:src="@color/colorLightGrey"
-        android:id="@+id/imgEditUserInfo"
-        android:layout_marginBottom="10dp"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Select photo"
-        android:textColor="@color/colorPrimary"
-        android:gravity="center_horizontal"
-        android:id="@+id/txtEditSelectPhoto"
-        android:textSize="16sp"
-        android:layout_marginBottom="20dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:text="Edit Profile"
+                    android:textColor="@color/colorTextPrimary"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content"/>
 
+            </LinearLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/txtEditLayoutNameUserInfo"
-        android:layout_marginBottom="6dp"
-        android:layout_height="wrap_content">
+        </com.google.android.material.appbar.MaterialToolbar>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"/>
+
+        <!-- Profile Picture Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtEditNameUserInfo"
-            android:hint="Name"
-            android:inputType="text"
-            android:textSize="15sp"/>
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingTop="32dp"
+            android:paddingBottom="24dp"
+            android:background="@color/colorSurface">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@color/colorLightGrey"
+                android:id="@+id/imgEditUserInfo"
+                android:layout_marginBottom="10dp"/>
 
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="📷  Change Photo"
+                android:textColor="@color/colorPrimary"
+                android:gravity="center_horizontal"
+                android:id="@+id/txtEditSelectPhoto"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:id="@+id/txtEditLayoutLastnameameUserInfo"
-        android:layout_marginBottom="30dp"
-        android:layout_height="wrap_content">
+        </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputEditText
+        <!-- Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorDivider"/>
+
+        <!-- Form Section -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/txtEditLastnameUserInfo"
-            android:hint="Lastname"
-            android:inputType="text"
-            android:textSize="15sp"/>
+            android:orientation="vertical"
+            android:background="@color/colorBackground"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="32dp">
 
-    </com.google.android.material.textfield.TextInputLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Personal Information"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/colorTextPrimary"
+                android:layout_marginBottom="20dp"/>
 
+            <!-- Name Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/txtEditLayoutNameUserInfo"
+                android:layout_marginBottom="16dp"
+                android:layout_height="wrap_content"
+                style="@style/OutlinedInputStyle"
+                android:hint="First Name">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:text="Save"
-        android:id="@+id/btnEditSave"
-        android:background="@drawable/btn_round"
-        android:textColor="@color/colorWhite"
-        android:layout_marginBottom="70dp"
-        android:textSize="17dp"
-        android:textAllCaps="false"/>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtEditNameUserInfo"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorTextPrimary"/>
 
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Last Name Field -->
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:id="@+id/txtEditLayoutLastnameameUserInfo"
+                android:layout_marginBottom="32dp"
+                android:layout_height="wrap_content"
+                style="@style/OutlinedInputStyle"
+                android:hint="Last Name">
 
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/txtEditLastnameUserInfo"
+                    android:inputType="text"
+                    android:textSize="15sp"
+                    android:textColor="@color/colorTextPrimary"/>
 
+            </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Save Button -->
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Save Changes"
+                android:id="@+id/btnEditSave"
+                android:background="@drawable/btn_gradient"
+                android:textColor="@color/colorWhite"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textAllCaps="false"
+                android:elevation="4dp"/>
 
-</LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

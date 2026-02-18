@@ -4,15 +4,47 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/bg_auth_header"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="match_parent"
+    <!-- Splash Screen Content -->
+    <LinearLayout
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Blog App"
-        android:textSize="32sp"
-        android:gravity="center_horizontal"
-        android:layout_centerInParent="true"
-        android:fontFamily="@font/leckerlione_regular"/>
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_centerInParent="true">
+
+        <!-- App Icon -->
+        <TextView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:text="✍"
+            android:textSize="42sp"
+            android:gravity="center"
+            android:background="@drawable/bg_avatar"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Blog App"
+            android:textSize="36sp"
+            android:textStyle="bold"
+            android:textColor="@color/colorWhite"
+            android:letterSpacing="0.05"
+            android:gravity="center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Share your stories"
+            android:textSize="15sp"
+            android:textColor="#CCffffff"
+            android:layout_marginTop="8dp"
+            android:gravity="center_horizontal"/>
+
+    </LinearLayout>
 
 </RelativeLayout>

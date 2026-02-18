@@ -4,45 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorBackground"
     tools:context=".OnBoardActivity">
-
 
     <androidx.viewpager.widget.ViewPager
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/view_pager"></androidx.viewpager.widget.ViewPager>
+        android:id="@+id/view_pager"/>
 
-    <RelativeLayout
+    <!-- Bottom Navigation Bar -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:paddingBottom="10dp"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content">
+        android:orientation="vertical"
+        android:paddingBottom="32dp"
+        android:paddingLeft="24dp"
+        android:paddingRight="24dp"
+        android:paddingTop="16dp">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Skip"
-            android:background="@android:color/transparent"
-            android:id="@+id/btnLeft"/>
-
-
-
+        <!-- Dots Indicator -->
         <LinearLayout
             android:id="@+id/dotsLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_centerInParent="true"
-            android:layout_alignParentTop="true"></LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="24dp"/>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Next"
-            android:layout_alignParentRight="true"
-            android:background="@android:color/transparent"
-            android:id="@+id/btnRight"/>
+        <!-- Navigation Buttons -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    </RelativeLayout>
+            <Button
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:text="Skip"
+                android:background="@android:color/transparent"
+                android:textColor="@color/colorTextSecondary"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:id="@+id/btnLeft"
+                android:layout_centerVertical="true"/>
+
+            <Button
+                android:layout_width="120dp"
+                android:layout_height="48dp"
+                android:text="Next →"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/btn_gradient"
+                android:textColor="@color/colorWhite"
+                android:textSize="15sp"
+                android:textAllCaps="false"
+                android:id="@+id/btnRight"
+                android:layout_centerVertical="true"/>
+
+        </RelativeLayout>
+
+    </LinearLayout>
 
 </RelativeLayout>
