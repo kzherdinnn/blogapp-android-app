@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
@@ -47,6 +48,8 @@ public class HomeFragment extends Fragment {
     private PostsAdapter postsAdapter;
     private MaterialToolbar toolbar;
     private SharedPreferences sharedPreferences;
+    // FIX: Singleton RequestQueue - reuse koneksi HTTP
+    private RequestQueue requestQueue;
 
     public HomeFragment(){ }
 
@@ -64,9 +67,14 @@ public class HomeFragment extends Fragment {
 
     private void init(){
         sharedPreferences = getContext().getApplicationContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        // FIX: Singleton RequestQueue
+        requestQueue = Volley.newRequestQueue(getContext().getApplicationContext());
+
         recyclerView = view.findViewById(R.id.recyclerHome);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        // FIX: Matikan animasi perubahan item agar gambar tidak flicker saat refresh
+        recyclerView.getItemAnimator().setChangeDuration(0);
         refreshLayout = view.findViewById(R.id.swipeHome);
         toolbar = view.findViewById(R.id.toolbarHome);
         ((HomeActivity)getContext()).setSupportActionBar(toolbar);
@@ -74,6 +82,8 @@ public class HomeFragment extends Fragment {
 
         arrayList = new ArrayList<>();
         postsAdapter = new PostsAdapter(getContext(), arrayList);
+        // FIX: stableIds agar RecyclerView tidak re-render item yang tidak berubah
+        postsAdapter.setHasStableIds(true);
         recyclerView.setAdapter(postsAdapter);
 
         getPosts();
@@ -89,11 +99,11 @@ public class HomeFragment extends Fragment {
     private void getPosts() {
         refreshLayout.setRefreshing(true);
 
-        StringRequest request = new StringRequest(Request.Method.GET, Constant.POSTS,response -> {
+        StringRequest request = new StringRequest(Request.Method.GET, Constant.POSTS, response -> {
 
             try {
                 JSONObject object = new JSONObject(response);
-                if (object.getBoolean("success")){
+                if (object.getBoolean("success")) {
                     arrayList.clear();
                     JSONArray array = new JSONArray(object.getString("posts"));
                     for (int i = 0; i < array.length(); i++) {
@@ -102,7 +112,7 @@ public class HomeFragment extends Fragment {
 
                         User user = new User();
                         user.setId(userObject.getInt("id"));
-                        user.setUserName(userObject.getString("name")+" "+userObject.getString("lastname"));
+                        user.setUserName(userObject.getString("name") + " " + userObject.getString("lastname"));
                         user.setPhoto(userObject.getString("photo"));
 
                         Post post = new Post();
@@ -117,6 +127,7 @@ public class HomeFragment extends Fragment {
 
                         arrayList.add(post);
                     }
+                    // FIX: notifyDataSetChanged agar list terupdate
                     postsAdapter.notifyDataSetChanged();
                 }
             } catch (JSONException e) {
@@ -125,24 +136,28 @@ public class HomeFragment extends Fragment {
 
             refreshLayout.setRefreshing(false);
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
-        }){
-
-            // provide token in header
-
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
-                String token = sharedPreferences.getString("token","");
-                HashMap<String,String> map = new HashMap<>();
-                map.put("Authorization","Bearer "+token);
+                String token = sharedPreferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
                 return map;
             }
         };
 
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        queue.add(request);
+        // FIX: Timeout lebih panjang untuk koneksi lambat
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                20000,
+                1,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT
+        ));
+
+        // FIX: Gunakan singleton requestQueue
+        requestQueue.add(request);
     }
 
     @Override
