@@ -27,6 +27,7 @@ import com.android.volley.toolbox.Volley;
 import com.pam.blogapp.Fragments.HomeFragment;
 import com.pam.blogapp.Models.Post;
 import com.pam.blogapp.Models.User;
+import com.pam.blogapp.TokenManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -163,7 +164,12 @@ public class AddPostActivity extends AppCompatActivity {
             btnPost.setEnabled(true);
             btnPost.setText("Publish Post");
             error.printStackTrace();
-            Toast.makeText(this, "Upload failed. Check your connection.", Toast.LENGTH_LONG).show();
+            // Handle token expired: redirect ke login jika 401
+            if (TokenManager.isTokenExpired(error)) {
+                TokenManager.forceLogout(AddPostActivity.this);
+            } else {
+                Toast.makeText(this, "Upload failed. Check your connection.", Toast.LENGTH_LONG).show();
+            }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

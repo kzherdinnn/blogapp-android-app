@@ -31,6 +31,7 @@ import com.pam.blogapp.HomeActivity;
 import com.pam.blogapp.Models.Post;
 import com.pam.blogapp.Models.User;
 import com.pam.blogapp.R;
+import com.pam.blogapp.TokenManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -139,6 +140,10 @@ public class HomeFragment extends Fragment {
         }, error -> {
             error.printStackTrace();
             refreshLayout.setRefreshing(false);
+            // Handle token expired: redirect ke login jika 401
+            if (TokenManager.isTokenExpired(error)) {
+                TokenManager.forceLogout(getContext());
+            }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

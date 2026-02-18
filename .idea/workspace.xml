@@ -92,7 +92,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8ca7a0c4-04ee-48d2-8e9b-ae01daa9876b" name="Changes" comment="Initial commit">
-      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/AddPostActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/AddPostActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/CommentActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/CommentActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/EditPostActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/EditPostActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/EditUserInfoActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/EditUserInfoActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/Fragments/AccountFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/Fragments/AccountFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/Fragments/HomeFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/pam/blogapp/Fragments/HomeFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

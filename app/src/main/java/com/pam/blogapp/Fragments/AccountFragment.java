@@ -34,6 +34,7 @@ import com.pam.blogapp.EditUserInfoActivity;
 import com.pam.blogapp.HomeActivity;
 import com.pam.blogapp.Models.Post;
 import com.pam.blogapp.R;
+import com.pam.blogapp.TokenManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -120,8 +121,12 @@ public class AccountFragment extends Fragment {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
+            // Handle token expired: redirect ke login jika 401
+            if (TokenManager.isTokenExpired(error)) {
+                TokenManager.forceLogout(getContext());
+            }
         }){
 
             @Override
@@ -187,8 +192,12 @@ public class AccountFragment extends Fragment {
             }
 
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
+            // Handle token expired: redirect ke login jika 401
+            if (TokenManager.isTokenExpired(error)) {
+                TokenManager.forceLogout(getContext());
+            }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

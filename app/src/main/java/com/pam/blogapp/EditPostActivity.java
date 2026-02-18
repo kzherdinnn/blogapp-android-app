@@ -18,6 +18,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.pam.blogapp.Fragments.HomeFragment;
 import com.pam.blogapp.Models.Post;
+import com.pam.blogapp.TokenManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -87,7 +88,12 @@ public class EditPostActivity extends AppCompatActivity {
         }, error -> {
             error.printStackTrace();
             dialog.dismiss();
-            Toast.makeText(this, "Failed to edit post. Check your connection.", Toast.LENGTH_SHORT).show();
+            // Handle token expired: redirect ke login jika 401
+            if (TokenManager.isTokenExpired(error)) {
+                TokenManager.forceLogout(EditPostActivity.this);
+            } else {
+                Toast.makeText(this, "Failed to edit post. Check your connection.", Toast.LENGTH_SHORT).show();
+            }
         }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

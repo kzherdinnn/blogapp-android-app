@@ -23,6 +23,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
+import com.pam.blogapp.TokenManager;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -103,9 +104,15 @@ public class EditUserInfoActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             dialog.dismiss();
-        },err->{
+        }, err -> {
             err.printStackTrace();
             dialog.dismiss();
+            // Handle token expired: redirect ke login jika 401
+            if (TokenManager.isTokenExpired(err)) {
+                TokenManager.forceLogout(EditUserInfoActivity.this);
+            } else {
+                Toast.makeText(this, "Failed to update profile. Check your connection.", Toast.LENGTH_SHORT).show();
+            }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {

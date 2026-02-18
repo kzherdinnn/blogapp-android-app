@@ -21,6 +21,7 @@ import com.pam.blogapp.Fragments.HomeFragment;
 import com.pam.blogapp.Models.Comment;
 import com.pam.blogapp.Models.Post;
 import com.pam.blogapp.Models.User;
+import com.pam.blogapp.TokenManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -94,8 +95,12 @@ public class CommentActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-        },error -> {
+        }, error -> {
             error.printStackTrace();
+            // Handle token expired: redirect ke login jika 401
+            if (TokenManager.isTokenExpired(error)) {
+                TokenManager.forceLogout(CommentActivity.this);
+            }
         }){
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -158,9 +163,13 @@ public class CommentActivity extends AppCompatActivity {
                 }
                 dialog.dismiss();
 
-            },err->{
+            }, err -> {
                 err.printStackTrace();
                 dialog.dismiss();
+                // Handle token expired: redirect ke login jika 401
+                if (TokenManager.isTokenExpired(err)) {
+                    TokenManager.forceLogout(CommentActivity.this);
+                }
             }){
                 //add token to header
 
