@@ -8,6 +8,7 @@ import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,18 +80,22 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
         holder.txtDate.setText(formatDate(comment.getDate()));
         holder.txtComment.setText(comment.getComment());
 
-        if (preferences.getInt("id",0)!=comment.getUser().getId()){
+        if (preferences.getInt("id",0) != comment.getUser().getId()){
             holder.btnDelete.setVisibility(View.GONE);
+            holder.btnEdit.setVisibility(View.GONE);
         }
         else {
             holder.btnDelete.setVisibility(View.VISIBLE);
+            holder.btnEdit.setVisibility(View.VISIBLE);
+
+            // Tombol Delete
             holder.btnDelete.setOnClickListener(v->{
                 AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                builder.setMessage("Are you sure?");
+                builder.setMessage("Are you sure you want to delete this comment?");
                 builder.setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        deleteComment(comment.getId(),position);
+                        deleteComment(comment.getId(), position);
                     }
                 });
                 builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -101,8 +106,94 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
                 });
                 builder.show();
             });
+
+            // Tombol Edit
+            holder.btnEdit.setOnClickListener(v -> {
+                showEditDialog(comment, position, holder);
+            });
         }
 
+    }
+
+    private void showEditDialog(Comment comment, int position, CommentsHolder holder) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        builder.setTitle("Edit Comment");
+
+        // Buat EditText untuk input komentar baru
+        final EditText input = new EditText(context);
+        input.setText(comment.getComment());
+        input.setSelection(input.getText().length()); // cursor di akhir teks
+        int paddingPx = (int) (16 * context.getResources().getDisplayMetrics().density);
+        input.setPadding(paddingPx, paddingPx, paddingPx, paddingPx);
+        builder.setView(input);
+
+        builder.setPositiveButton("Save", (dialogInterface, which) -> {
+            String newComment = input.getText().toString().trim();
+            if (newComment.isEmpty()) {
+                Toast.makeText(context, "Comment cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (newComment.equals(comment.getComment())) {
+                // Tidak ada perubahan
+                return;
+            }
+            editComment(comment.getId(), newComment, position, holder);
+        });
+
+        builder.setNegativeButton("Cancel", (dialogInterface, which) -> dialogInterface.dismiss());
+
+        builder.show();
+    }
+
+    private void editComment(int commentId, String newCommentText, int position, CommentsHolder holder) {
+        dialog.setMessage("Saving changes...");
+        dialog.show();
+
+        StringRequest request = new StringRequest(Request.Method.PUT, Constant.EDIT_COMMENT, res -> {
+            try {
+                JSONObject object = new JSONObject(res);
+                if (object.getBoolean("success")) {
+                    // Update data lokal
+                    list.get(position).setComment(newCommentText);
+                    holder.txtComment.setText(newCommentText);
+                    notifyItemChanged(position);
+                    Toast.makeText(context, "Comment updated successfully", Toast.LENGTH_SHORT).show();
+                } else {
+                    String message = object.optString("message", "Failed to update comment");
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+                Toast.makeText(context, "Error updating comment", Toast.LENGTH_SHORT).show();
+            }
+            dialog.dismiss();
+        }, err -> {
+            err.printStackTrace();
+            dialog.dismiss();
+            Toast.makeText(context, "Failed to update comment", Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                String token = preferences.getString("token", "");
+                HashMap<String, String> map = new HashMap<>();
+                map.put("Authorization", "Bearer " + token);
+                return map;
+            }
+
+            @Override
+            public String getBodyContentType() {
+                return "application/x-www-form-urlencoded; charset=UTF-8";
+            }
+
+            @Override
+            public byte[] getBody() throws AuthFailureError {
+                String body = "id=" + commentId + "&comment=" + android.net.Uri.encode(newCommentText);
+                return body.getBytes(java.nio.charset.StandardCharsets.UTF_8);
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(request);
     }
 
     private String formatDate(String date) {
@@ -188,7 +279,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         private CircleImageView imgProfile;
         private TextView txtName,txtDate,txtComment;
-        private ImageButton btnDelete;
+        private ImageButton btnDelete, btnEdit;
 
         public CommentsHolder(@NonNull View itemView) {
             super(itemView);
@@ -198,6 +289,7 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
             txtDate = itemView.findViewById(R.id.txtCommentDate);
             txtComment = itemView.findViewById(R.id.txtCommentText);
             btnDelete = itemView.findViewById(R.id.btnDeleteComment);
+            btnEdit = itemView.findViewById(R.id.btnEditComment);
         }
     }
 }
