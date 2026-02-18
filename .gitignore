@@ -1,2 +1,4 @@
 # Project exclude paths
-/.gradle//build/
+/.gradle/
+/build/
+/.idea/workspace.xml
