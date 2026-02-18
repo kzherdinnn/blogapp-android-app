@@ -35,10 +35,10 @@ public class App extends Application {
             // 2. Inisialisasi Picasso singleton dengan downloader custom
             Picasso picasso = new Picasso.Builder(this)
                     .downloader(new OkHttp3Downloader(client))
-                    .loggingEnabled(true) // AKTIFKAN LOGGING untuk debug di Logcat
+                    .loggingEnabled(true) 
                     .listener((picasso1, uri, exception) -> {
-                        // Ini akan terpanggil jika gambar gagal load
-                        exception.printStackTrace();
+                        android.util.Log.e("DEBUG_PICASSO", "FAILED URI: " + uri);
+                        android.util.Log.e("DEBUG_PICASSO", "REASON: " + exception.getMessage());
                     })
                     .build();
 
