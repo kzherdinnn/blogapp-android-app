@@ -103,17 +103,22 @@ public class AccountFragment extends Fragment {
                         JSONObject p = posts.getJSONObject(i);
 
                         Post post  = new Post();
-                        post.setPhoto(Constant.URL+"storage/posts/"+p.getString("photo"));
+                        post.setPhoto(Constant.URL+"/storage/posts/"+p.getString("photo"));
                         arrayList.add(post);
 
                     }
                     JSONObject user = object.getJSONObject("user");
                     txtName.setText(user.getString("name")+" "+user.getString("lastname"));
                     txtPostsCount.setText(arrayList.size()+"");
-                    Picasso.get().load(Constant.URL+"storage/profiles/"+user.getString("photo")).into(imgProfile);
+                    Picasso.get()
+                            .load(Constant.URL + "/storage/profiles/" + user.getString("photo"))
+                            .placeholder(R.color.colorLightGrey)
+                            .error(R.color.colorLightGrey)
+                            .noFade()
+                            .into(imgProfile);
                     adapter = new AccountPostAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(adapter);
-                    imgUrl = Constant.URL+"storage/profiles/"+user.getString("photo");
+                    imgUrl = Constant.URL+"/storage/profiles/"+user.getString("photo");
                 }
 
 

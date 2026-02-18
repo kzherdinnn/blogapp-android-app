@@ -67,7 +67,14 @@ public class EditUserInfoActivity extends AppCompatActivity {
         btnSave = findViewById(R.id.btnEditSave);
         circleImageView = findViewById(R.id.imgEditUserInfo);
 
-        Picasso.get().load(getIntent().getStringExtra("imgUrl")).into(circleImageView);
+        Picasso.get()
+                .load(getIntent().getStringExtra("imgUrl"))
+                .placeholder(R.color.colorLightGrey)
+                .error(R.color.colorLightGrey)
+                .fit()
+                .centerCrop()
+                .noFade()
+                .into(circleImageView);
         txtName.setText(userPref.getString("name",""));
         txtLastname.setText(userPref.getString("lastname",""));
 
@@ -168,13 +175,39 @@ public class EditUserInfoActivity extends AppCompatActivity {
     }
 
     private String bitmapToString(Bitmap bitmap) {
-        if (bitmap!=null){
+        if (bitmap != null) {
+            // Resize bitmap ke max 512px untuk profile (cukup besar untuk CircleImageView)
+            Bitmap resized = resizeBitmap(bitmap, 512);
+
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-            bitmap.compress(Bitmap.CompressFormat.JPEG,100,byteArrayOutputStream);
-            byte [] array = byteArrayOutputStream.toByteArray();
-            return Base64.encodeToString(array,Base64.DEFAULT);
+            // Compress ke 70% quality (JPEG)
+            resized.compress(Bitmap.CompressFormat.JPEG, 70, byteArrayOutputStream);
+            byte[] array = byteArrayOutputStream.toByteArray();
+            return Base64.encodeToString(array, Base64.DEFAULT);
+        }
+        return "";
+    }
+
+    /**
+     * Resize bitmap agar sisi terpanjang tidak melebihi maxSize
+     */
+    private Bitmap resizeBitmap(Bitmap bitmap, int maxSize) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        if (width <= maxSize && height <= maxSize) {
+            return bitmap; // Tidak perlu resize
         }
 
-        return "";
+        float ratio = (float) width / height;
+        if (width > height) {
+            width = maxSize;
+            height = (int) (width / ratio);
+        } else {
+            height = maxSize;
+            width = (int) (height * ratio);
+        }
+
+        return Bitmap.createScaledBitmap(bitmap, width, height, true);
     }
 }

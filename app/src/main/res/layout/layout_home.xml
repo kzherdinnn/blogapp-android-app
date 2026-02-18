@@ -67,7 +67,7 @@
             android:layout_width="match_parent"
             android:id="@+id/recyclerHome"
             android:paddingTop="8dp"
-            android:paddingBottom="80dp"
+            android:paddingBottom="16dp"
             android:clipToPadding="false"
             android:layout_height="match_parent"/>
 

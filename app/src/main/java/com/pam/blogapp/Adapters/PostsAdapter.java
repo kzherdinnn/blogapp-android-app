@@ -77,23 +77,26 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsHolder>
 
         // FIX 1: Picasso dengan cache - gambar tidak akan di-download ulang saat scroll
         // networkPolicy(OFFLINE) dulu, kalau gagal baru fetch dari network
-        String profileUrl = Constant.URL + "storage/profiles/" + post.getUser().getPhoto();
-        String postPhotoUrl = Constant.URL + "storage/posts/" + post.getPhoto();
+        // Helper untuk pastikan URL tidak double slash dan valid
+        String cleanProfileUrl = buildImageUrl("profiles", post.getUser().getPhoto());
+        String cleanPostPhotoUrl = buildImageUrl("posts", post.getPhoto());
 
         Picasso.get()
-                .load(profileUrl)
+                .load(cleanProfileUrl)
                 .placeholder(R.color.colorLightGrey)
-                .error(R.color.colorLightGrey)
-                .fit()
+                .error(android.R.color.holo_red_light)
+                .resize(200, 200) // Ukuran profil kecil saja
                 .centerCrop()
+                .noFade()
                 .into(holder.imgProfile);
 
         Picasso.get()
-                .load(postPhotoUrl)
+                .load(cleanPostPhotoUrl)
                 .placeholder(R.color.colorLightGrey)
-                .error(R.color.colorLightGrey)
-                .fit()
-                .centerInside()
+                .error(android.R.color.holo_red_light)
+                .resize(1024, 0) // Resize lebar ke 1024px, tinggi auto (0)
+                .onlyScaleDown() // Jangan perbesar jika asli lebih kecil
+                .noFade()
                 .into(holder.imgPost);
 
         holder.txtName.setText(post.getUser().getUserName());
@@ -221,6 +224,24 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsHolder>
     @Override
     public long getItemId(int position) {
         return list.get(position).getId();
+    }
+
+    private String buildImageUrl(String folder, String filename) {
+        if (filename == null || filename.isEmpty() || filename.equals("null")) {
+            return "https://ui-avatars.com/api/?name=User"; // Fallback
+        }
+        
+        // Jka sudah full URL
+        if (filename.startsWith("http")) {
+            return filename;
+        }
+
+        String baseUrl = Constant.URL;
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+        }
+        
+        return baseUrl + "/storage/" + folder + "/" + filename;
     }
 
     private String formatDate(String date) {

@@ -76,7 +76,7 @@ public class CommentActivity extends AppCompatActivity {
 
                         User mUser = new User();
                         mUser.setId(user.getInt("id"));
-                        mUser.setPhoto(Constant.URL+"storage/profiles/"+user.getString("photo"));
+                        mUser.setPhoto(Constant.URL+"/storage/profiles/"+user.getString("photo"));
                         mUser.setUserName(user.getString("name")+" "+user.getString("lastname"));
 
                         Comment mComment = new Comment();
@@ -143,7 +143,7 @@ public class CommentActivity extends AppCompatActivity {
                         User u = new User();
                         u.setId(user.getInt("id"));
                         u.setUserName(user.getString("name")+" "+user.getString("lastname"));
-                        u.setPhoto(Constant.URL+"storage/profiles/"+user.getString("photo"));
+                        u.setPhoto(Constant.URL+"/storage/profiles/"+user.getString("photo"));
                         c.setUser(u);
                         c.setId(comment.getInt("id"));
                         c.setDate(comment.getString("created_at"));
