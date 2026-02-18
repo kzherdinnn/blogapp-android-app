@@ -288,6 +288,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsHolder>
             return  results;
         }
 
+        @SuppressWarnings("unchecked")
         @Override
         protected void publishResults(CharSequence constraint, FilterResults results) {
             list.clear();
