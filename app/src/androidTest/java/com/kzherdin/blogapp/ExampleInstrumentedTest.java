@@ -1,4 +1,4 @@
-﻿package com.kzherdin.blogapp;
+package com.kzherdin.blogapp;
 
 import android.content.Context;
 
@@ -21,7 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-
-        assertEquals("com.habib.blogapp", appContext.getPackageName());
+        assertEquals("com.kzherdin.blogapp", appContext.getPackageName());
     }
 }

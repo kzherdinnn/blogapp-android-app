@@ -1,4 +1,4 @@
-﻿package com.kzherdin.blogapp;
+package com.kzherdin.blogapp;
 
 import org.junit.Test;
 
