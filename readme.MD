@@ -4,6 +4,7 @@
 
 ![Android](https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=android&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
+![Cloudinary](https://img.shields.io/badge/Cloudinary-3448C5?style=for-the-badge&logo=cloudinary&logoColor=white)
 ![API Level](https://img.shields.io/badge/Min%20SDK-24%20(Android%207.0)-blue?style=for-the-badge)
 ![Target SDK](https://img.shields.io/badge/Target%20SDK-36%20(Android%2016)-green?style=for-the-badge)
 
@@ -199,6 +200,39 @@ app/src/main/java/com/kzherdin/blogapp/
 ## 📸 Screenshot
 
 > *Coming soon*
+
+---
+
+## 📋 Changelog
+
+### v2.0.0 — Feb 2026
+
+#### 🖼️ Fix Image Display (Cloudinary)
+- **Fix `PostsAdapter`** — `buildImageUrl()` kini handle Cloudinary URL (startsWith "http") secara langsung tanpa prepend base URL
+- **Fix `AccountPostAdapter`** — Sama seperti `PostsAdapter`, handle Cloudinary URL dan return `null` untuk post tanpa foto
+- **Fix `AccountFragment`** — Perbaiki logika URL foto profil yang salah memprepend `/storage/profiles/` ke Cloudinary URL
+- **Fix `CommentsAdapter`** — Tambah fallback PNG avatar saat foto profil kosong/null
+- **Fix `CommentActivity`** — Perbaiki konstruksi URL foto profil di `getComments()` dan `addComment()` agar handle Cloudinary URL
+- **Fix SVG Fallback** — Ganti fallback avatar `ui-avatars.com` dari default (SVG) ke `&format=png` karena Android tidak bisa decode SVG
+
+#### ⚡ Upload Optimization
+- **Resize Bitmap** — Resize gambar ke max 1024px sebelum encode Base64 (dari ~3MB ke ~200KB)
+- **JPEG Compress** — Kompres ke 70% quality untuk mengurangi ukuran upload
+- **Timeout** — Set Volley timeout ke 60 detik untuk upload gambar besar
+- **No Retry** — Nonaktifkan auto-retry Volley untuk mencegah double post
+
+#### 🔐 Auth & Stability
+- **Fix Double Post** — Tambah flag `isPosting` untuk mencegah double submit tombol
+- **Auto Logout** — `TokenManager` deteksi JWT token expired (HTTP 401) dan redirect ke login otomatis
+- **Token Refresh** — Pengelolaan token yang lebih baik
+
+### v1.0.0 — Initial Release
+- 🔐 Login & Register dengan JWT
+- 📰 Home feed semua post
+- ➕ Buat post dengan gambar
+- ❤️ Like/Unlike post
+- 💬 Komentar pada post
+- 👤 Profil dan edit informasi
 
 ---
 
