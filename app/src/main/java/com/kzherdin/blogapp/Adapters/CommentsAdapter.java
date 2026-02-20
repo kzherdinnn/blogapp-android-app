@@ -68,8 +68,9 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
     @Override
     public void onBindViewHolder(@NonNull CommentsHolder holder, int position) {
         Comment comment = list.get(position);
+        String profileUrl = buildImageUrl("profiles", comment.getUser().getPhoto());
         Picasso.get()
-                .load(comment.getUser().getPhoto())
+                .load(profileUrl)
                 .placeholder(R.color.colorLightGrey)
                 .error(R.color.colorLightGrey)
                 .fit()
@@ -194,6 +195,20 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(request);
+    }
+
+    private String buildImageUrl(String folder, String filename) {
+        if (filename == null || filename.isEmpty() || filename.equals("null")) {
+            return null;
+        }
+        if (filename.startsWith("http")) {
+            return filename;
+        }
+        String baseUrl = Constant.URL;
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+        }
+        return baseUrl + "/storage/" + folder + "/" + filename;
     }
 
     private String formatDate(String date) {

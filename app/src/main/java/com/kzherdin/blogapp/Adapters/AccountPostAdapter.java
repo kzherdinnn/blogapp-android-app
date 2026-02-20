@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.kzherdin.blogapp.Constant;
 import com.kzherdin.blogapp.Models.Post;
 import com.kzherdin.blogapp.R;
 import com.squareup.picasso.Picasso;
@@ -34,13 +35,28 @@ public class AccountPostAdapter extends RecyclerView.Adapter<AccountPostAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull AccountPostHolder holder, int position) {
+        String postPhotoUrl = buildImageUrl("posts", arrayList.get(position).getPhoto());
         Picasso.get()
-                .load(arrayList.get(position).getPhoto())
+                .load(postPhotoUrl)
                 .placeholder(R.color.colorLightGrey)
                 .error(R.color.colorLightGrey)
                 .noFade()
                 .into(holder.imageView);
-     }
+    }
+
+    private String buildImageUrl(String folder, String filename) {
+        if (filename == null || filename.isEmpty() || filename.equals("null")) {
+            return null;
+        }
+        if (filename.startsWith("http")) {
+            return filename;
+        }
+        String baseUrl = Constant.URL;
+        if (baseUrl.endsWith("/")) {
+            baseUrl = baseUrl.substring(0, baseUrl.length() - 1);
+        }
+        return baseUrl + "/storage/" + folder + "/" + filename;
+    }
 
     @Override
     public int getItemCount() {
