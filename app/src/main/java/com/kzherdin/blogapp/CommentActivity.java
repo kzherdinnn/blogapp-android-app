@@ -76,7 +76,11 @@ public class CommentActivity extends AppCompatActivity {
 
                         User mUser = new User();
                         mUser.setId(user.getInt("id"));
-                        mUser.setPhoto(Constant.URL+"/storage/profiles/"+user.getString("photo"));
+                        String userPhoto = user.optString("photo", "");
+                        String profileUrl = userPhoto.startsWith("http") ? userPhoto
+                                : (!userPhoto.isEmpty() && !userPhoto.equals("null") ? Constant.URL + "/storage/profiles/" + userPhoto
+                                : "https://ui-avatars.com/api/?name=User&format=png&background=random&size=200");
+                        mUser.setPhoto(profileUrl);
                         mUser.setUserName(user.getString("name")+" "+user.getString("lastname"));
 
                         Comment mComment = new Comment();
@@ -143,7 +147,11 @@ public class CommentActivity extends AppCompatActivity {
                         User u = new User();
                         u.setId(user.getInt("id"));
                         u.setUserName(user.getString("name")+" "+user.getString("lastname"));
-                        u.setPhoto(Constant.URL+"/storage/profiles/"+user.getString("photo"));
+                        String newUserPhoto = user.optString("photo", "");
+                        String newProfileUrl = newUserPhoto.startsWith("http") ? newUserPhoto
+                                : (!newUserPhoto.isEmpty() && !newUserPhoto.equals("null") ? Constant.URL + "/storage/profiles/" + newUserPhoto
+                                : "https://ui-avatars.com/api/?name=User&format=png&background=random&size=200");
+                        u.setPhoto(newProfileUrl);
                         c.setUser(u);
                         c.setId(comment.getInt("id"));
                         c.setDate(comment.getString("created_at"));
