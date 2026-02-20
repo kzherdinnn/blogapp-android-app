@@ -46,7 +46,7 @@ public class AccountPostAdapter extends RecyclerView.Adapter<AccountPostAdapter.
 
     private String buildImageUrl(String folder, String filename) {
         if (filename == null || filename.isEmpty() || filename.equals("null")) {
-            return null;
+            return null; // Post tanpa foto = tidak tampilkan
         }
         if (filename.startsWith("http")) {
             return filename;

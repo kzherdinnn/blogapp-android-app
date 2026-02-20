@@ -118,9 +118,16 @@ public class AccountFragment extends Fragment {
                     txtPostsCount.setText(arrayList.size()+"");
 
                     // Jika sudah Cloudinary URL (full URL), pakai langsung
-                    String userPhoto = user.getString("photo");
-                    String profileUrl = userPhoto.startsWith("http") ? userPhoto
-                            : Constant.URL + "/storage/profiles/" + userPhoto;
+                    String userPhoto = user.optString("photo", "");
+                    String profileUrl;
+                    if (userPhoto.startsWith("http")) {
+                        profileUrl = userPhoto; // Cloudinary URL langsung
+                    } else if (!userPhoto.isEmpty() && !userPhoto.equals("null")) {
+                        profileUrl = Constant.URL + "/storage/profiles/" + userPhoto;
+                    } else {
+                        // Fallback PNG (bukan SVG)
+                        profileUrl = "https://ui-avatars.com/api/?name=User&format=png&background=random&size=200";
+                    }
                     Picasso.get()
                             .load(profileUrl)
                             .placeholder(R.color.colorLightGrey)

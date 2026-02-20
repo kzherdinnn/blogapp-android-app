@@ -228,10 +228,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.PostsHolder>
 
     private String buildImageUrl(String folder, String filename) {
         if (filename == null || filename.isEmpty() || filename.equals("null")) {
-            return "https://ui-avatars.com/api/?name=User"; // Fallback
+            // Fallback berbeda untuk profile vs post
+            if (folder.equals("profiles")) {
+                // PNG format - Android tidak support SVG
+                return "https://ui-avatars.com/api/?name=User&format=png&background=random&size=200";
+            }
+            return null; // Post tanpa foto = tidak tampilkan gambar
         }
         
-        // Jka sudah full URL
+        // Jika sudah full URL (Cloudinary)
         if (filename.startsWith("http")) {
             return filename;
         }
