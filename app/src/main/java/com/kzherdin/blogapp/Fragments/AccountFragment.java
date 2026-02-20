@@ -103,22 +103,33 @@ public class AccountFragment extends Fragment {
                         JSONObject p = posts.getJSONObject(i);
 
                         Post post  = new Post();
-                        post.setPhoto(Constant.URL+"/storage/posts/"+p.getString("photo"));
+                        // Jika sudah Cloudinary URL (full URL), pakai langsung
+                        String postPhoto = p.getString("photo");
+                        if (postPhoto.startsWith("http")) {
+                            post.setPhoto(postPhoto);
+                        } else {
+                            post.setPhoto(Constant.URL + "/storage/posts/" + postPhoto);
+                        }
                         arrayList.add(post);
 
                     }
                     JSONObject user = object.getJSONObject("user");
                     txtName.setText(user.getString("name")+" "+user.getString("lastname"));
                     txtPostsCount.setText(arrayList.size()+"");
+
+                    // Jika sudah Cloudinary URL (full URL), pakai langsung
+                    String userPhoto = user.getString("photo");
+                    String profileUrl = userPhoto.startsWith("http") ? userPhoto
+                            : Constant.URL + "/storage/profiles/" + userPhoto;
                     Picasso.get()
-                            .load(Constant.URL + "/storage/profiles/" + user.getString("photo"))
+                            .load(profileUrl)
                             .placeholder(R.color.colorLightGrey)
                             .error(R.color.colorLightGrey)
                             .noFade()
                             .into(imgProfile);
                     adapter = new AccountPostAdapter(getContext(),arrayList);
                     recyclerView.setAdapter(adapter);
-                    imgUrl = Constant.URL+"/storage/profiles/"+user.getString("photo");
+                    imgUrl = profileUrl;
                 }
 
 
