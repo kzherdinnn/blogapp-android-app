@@ -199,10 +199,14 @@ public class CommentsAdapter extends RecyclerView.Adapter<CommentsAdapter.Commen
 
     private String buildImageUrl(String folder, String filename) {
         if (filename == null || filename.isEmpty() || filename.equals("null")) {
+            // Fallback PNG untuk profile (Android tidak support SVG)
+            if (folder.equals("profiles")) {
+                return "https://ui-avatars.com/api/?name=User&format=png&background=random&size=200";
+            }
             return null;
         }
         if (filename.startsWith("http")) {
-            return filename;
+            return filename; // Cloudinary URL langsung
         }
         String baseUrl = Constant.URL;
         if (baseUrl.endsWith("/")) {
