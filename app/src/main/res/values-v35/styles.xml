@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Override untuk Android 15+ (API 35+): Nonaktifkan Edge-to-Edge enforcement -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:navigationBarColor">@color/colorSurface</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="colorControlNormal">@color/colorTextSecondary</item>
+        <item name="colorControlActivated">@color/colorPrimary</item>
+        <item name="colorSurface">@color/colorSurface</item>
+        <item name="colorOnSurface">@color/colorTextPrimary</item>
+        <!-- Opt-out dari Edge-to-Edge enforcement yang wajib di Android 15+ -->
+        <item name="android:windowOptOutEdgeToEdgeEnforcement">true</item>
+    </style>
+</resources>
