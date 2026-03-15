@@ -25,7 +25,7 @@ Proyek ini terdiri dari **dua repository** yang saling terhubung:
 | **[blogapp-laravel-api](https://github.com/kzherdinnn/blogapp-laravel-api)** | Laravel 9, JWT Auth | REST API Backend |
 
 > 💡 Android app **berkomunikasi** dengan Laravel API melalui HTTP request menggunakan Volley & OkHttp.  
-> Base URL API: `https://blogapp-laravel-api-production.up.railway.app`
+> Base URL API: `https://blogapp.api.onesite.my.id`
 
 ---
 
@@ -83,8 +83,8 @@ cd blogapp-android-app
 
 Aplikasi ini membutuhkan backend API. Pastikan [Blog App Laravel API](https://github.com/kzherdinnn/blogapp-laravel-api) sudah berjalan.
 
-> **Default:** App sudah dikonfigurasi ke server Railway yang live:  
-> `https://blogapp-laravel-api-production.up.railway.app`
+> **Default:** App sudah dikonfigurasi ke server yang live:  
+> `https://blogapp.api.onesite.my.id`
 
 Jika ingin menggunakan server lokal, ubah `BASE_URL` di:
 
@@ -120,7 +120,7 @@ Run → Run 'app' (Shift+F10)
 Semua endpoint API didefinisikan di `Constant.java`:
 
 ```java
-BASE_URL  = https://blogapp-laravel-api-production.up.railway.app
+BASE_URL  = https://blogapp.api.onesite.my.id
 API       = BASE_URL/api
 
 POST  /api/login              → Login

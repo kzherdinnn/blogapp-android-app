@@ -19,8 +19,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.textfield.TextInputEditText;
@@ -174,27 +179,64 @@ public class SignUpFragment extends Fragment {
                     SharedPreferences userPref = getActivity().getApplicationContext().getSharedPreferences("user",getContext().MODE_PRIVATE);
                     SharedPreferences.Editor editor = userPref.edit();
                     editor.putString("token",object.getString("token"));
-                    editor.putString("name",user.getString("name"));
+                    editor.putString("name", user.isNull("name") ? "" : user.getString("name"));
                     editor.putInt("id",user.getInt("id"));
-                    editor.putString("lastname",user.getString("lastname"));
-                    editor.putString("photo",user.getString("photo"));
+                    editor.putString("lastname", user.isNull("lastname") ? "" : user.getString("lastname"));
+                    editor.putString("photo", user.isNull("photo") ? "" : user.getString("photo"));
                     editor.putBoolean("isLoggedIn",true);
                     editor.apply();
-                    //if success
+                    //if success — Toast dulu sebelum finish()
+                    Toast.makeText(getContext(), "Register Success", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(((AuthActivity)getContext()), UserInfoActivity.class));
                     ((AuthActivity) getContext()).finish();
-                    Toast.makeText(getContext(), "Register Success", Toast.LENGTH_SHORT).show();
+                } else {
+                    String msg = object.optString("message", "Register gagal");
+                    Toast.makeText(getContext(), msg, Toast.LENGTH_LONG).show();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
+                Toast.makeText(getContext(), "Parse error: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
             dialog.dismiss();
 
-        },error -> {
-            // error if connection not success
+        }, error -> {
             error.printStackTrace();
             dialog.dismiss();
-        }){
+
+            String message;
+            if (error instanceof TimeoutError) {
+                message = "Request timeout. Cek koneksi internet.";
+            } else if (error instanceof NoConnectionError) {
+                message = "Tidak ada koneksi internet.";
+            } else if (error instanceof NetworkError) {
+                message = "Network error. Cek koneksi.";
+            } else if (error instanceof ServerError) {
+                NetworkResponse response = error.networkResponse;
+                if (response != null) {
+                    String body = new String(response.data);
+                    android.util.Log.e("REGISTER_ERROR", "Status: " + response.statusCode + " Body: " + body);
+                    try {
+                        JSONObject errObj = new JSONObject(body);
+                        message = "Server error " + response.statusCode + ": " +
+                                errObj.optString("message", body);
+                    } catch (JSONException ex) {
+                        message = "Server error " + response.statusCode + ": " + body;
+                    }
+                } else {
+                    message = "Server error (no response).";
+                }
+            } else {
+                NetworkResponse response = error.networkResponse;
+                if (response != null) {
+                    String body = new String(response.data);
+                    android.util.Log.e("REGISTER_ERROR", "Status: " + response.statusCode + " Body: " + body);
+                    message = "Error " + response.statusCode + ": " + body;
+                } else {
+                    message = "Unknown error: " + error.getMessage();
+                }
+            }
+            Toast.makeText(getContext(), message, Toast.LENGTH_LONG).show();
+        }) {
 
             // add parameters
 

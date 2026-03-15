@@ -1,8 +1,8 @@
 package com.kzherdin.blogapp;
 
 public class Constant {
-    public static final String URL = "https://blogapp-laravel-api-production.up.railway.app";
-    public static final String HOME = URL+"/api";
+    public static final String URL = "https://blogapp.api.onesite.my.id/";
+    public static final String HOME = URL+"api";
     public static final String LOGIN = HOME+"/login";
     public static final String LOGOUT = HOME+"/logout";
     public static final String REGISTER = HOME+"/register";
