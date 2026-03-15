@@ -188,7 +188,7 @@ app/src/main/java/com/kzherdin/blogapp/
 | Properti | Nilai |
 |---|---|
 | **Package Name** | `com.kzherdin.blogapp` |
-| **Version Name** | `1.3` |
+| **Version Name** | `1.5` |
 | **Version Code** | `6` |
 | **Min SDK** | `24` (Android 7.0 Nougat) |
 | **Target SDK** | `36` (Android 16) |
@@ -204,6 +204,10 @@ app/src/main/java/com/kzherdin/blogapp/
 ---
 
 ## 📋 Changelog
+
+### v1.5.0 — Mar 2026
+- 🐛 **Bug Fix** — Perbaikan bug & peningkatan stabilitas aplikasi
+- 🔗 **Update API URL** — Perbarui Base URL ke domain kustom `https://blogapp.api.onesite.my.id`
 
 ### v2.0.0 — Feb 2026
 
