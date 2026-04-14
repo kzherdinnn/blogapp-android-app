@@ -188,8 +188,8 @@ app/src/main/java/com/kzherdin/blogapp/
 | Properti | Nilai |
 |---|---|
 | **Package Name** | `com.kzherdin.blogapp` |
-| **Version Name** | `3.0` |
-| **Version Code** | `7` |
+| **Version Name** | `3.0.1` |
+| **Version Code** | `8` |
 | **Min SDK** | `24` (Android 7.0 Nougat) |
 | **Target SDK** | `36` (Android 16) |
 | **Compile SDK** | `36` |
@@ -204,6 +204,10 @@ app/src/main/java/com/kzherdin/blogapp/
 ---
 
 ## 📋 Changelog
+
+### v3.0.1 — Apr 2026
+- 📱 **UI Fix** — Menambahkan `android:fitsSystemWindows="true"` di seluruh layout root app untuk memperbaiki tata letak (layout) UI agar tidak tumpang tindih (nabrak) dengan status bar dan navigation bar pada Android 15+ (Edge-to-Edge display).
+- ⚙️ **Update Versi** — versionName `3.0.1`, versionCode `8`.
 
 ### v3.0.0 — Mar 2026
 - 🚀 **Release Baru** — Pembaruan versionName menjadi `3.0` dan versionCode menjadi `7`
